@@ -595,6 +595,12 @@ module Jqgrid
               cellsubmit: '#{options[:cellsubmit]}',
               cellEdit: #{options[:cellEdit]},
               userDataOnFooter: #{options[:userDataOnFooter]},
+              loadError: function(xhr, status, error){
+                // Redirect to login page when session expires, see application controller
+                if (error == 'Unauthorized') {
+                  window.location = '/login';
+                }
+              },
               #{grouping}
               #{grouping_view}
               #{multiselect}
