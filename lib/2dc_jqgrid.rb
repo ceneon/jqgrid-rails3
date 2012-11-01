@@ -600,13 +600,7 @@ module Jqgrid
                 if (error == 'Unauthorized') {
                   window.location = '/login';
                 } else {
-                  if ($.trim(xhr.responseText).length <= 0) {
-		    alert(error);
-	          } else {
-                    // Extract error settings
-                    var resText=JSON.parse(xhr.responseText);
-	            return alert(resText.message);
-		  }
+	          alert('An error has occurred during the grid load operation');
 		}
               },
               #{grouping}
