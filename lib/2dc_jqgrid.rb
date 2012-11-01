@@ -600,7 +600,13 @@ module Jqgrid
                 if (error == 'Unauthorized') {
                   window.location = '/login';
                 } else {
-	          return jQuery.jqGridErrorHandler(xhr, status, error)
+                  if ($.trim(xhr.responseText).length <= 0) {
+		    alert(error);
+	          } else {
+                    // Extract error settings
+                    var resText=JSON.parse(xhr.responseText);
+	            return alert(resText.message);
+		  }
 		}
               },
               #{grouping}
