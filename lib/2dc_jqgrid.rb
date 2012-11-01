@@ -599,7 +599,9 @@ module Jqgrid
                 // Redirect to login page when session expires, see application controller
                 if (error == 'Unauthorized') {
                   window.location = '/login';
-                }
+                } else {
+		  return jQuery.myranzcog_alert(error);
+		}
               },
               #{grouping}
               #{grouping_view}
