@@ -732,11 +732,13 @@ module JqgridJson
         # can not contain meta chars, see
         # http://stackoverflow.com/questions/3208876/using-jquery-selector-with-ids-with-comma
         if elem.id.is_a?(Array)
-          ids = elem.id.join(',')
+          # Here we convert everything to ASCII code and join with a -
+          # To decode we would do the opposite, i.e.
+          # ids.split('-').map(&:to_i).each {|c| a+=c.chr}
+          ids = elem.id.join(',').split('').map(&:ord).join('-')
         else
           ids = elem.id
         end
-        ids = ids.gsub(/([:~!<>=.#;&+*~':"!^$"])/,'---').gsub(/,/,'___')
         json << %Q({"id":"#{ids}","cell":[)
         couples = elem.attributes.symbolize_keys
         attributes.each do |atr|
