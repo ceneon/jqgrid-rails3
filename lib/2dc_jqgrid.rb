@@ -549,7 +549,7 @@ module Jqgrid
                 viewrecords: #{options[:subgrid][:viewrecords]},
                 rowlist: #{options[:subgrid][:rowlist]},
                 shrinkToFit: #{options[:subgrid][:shrinkToFit]},
-                toolbar : [true,"top"], 
+                //toolbar : [true,"top"], 
         		    #{subgrid_inline_edit}
         		    #{subgrid_direct_link}
                 #{subgrid_context_menu}
