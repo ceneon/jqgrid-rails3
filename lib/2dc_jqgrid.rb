@@ -56,7 +56,11 @@ module Jqgrid
           :loadonce            => 'false',
           :cellsubmit          => 'remote',
           :cellEdit            => 'false',
-	  :ignoreCase	       => 'true',
+	  # If not a *local* search then it depends on DB, postgres for example is case insensitive when using LIKE
+          # so it will ignore this, in docs is says:
+          # By default the *local* searching is case-sensitive. To make the local search and 
+          # sorting not case-insensitive set this options to true
+          :ignoreCase	       => 'true',
           :form_width          => 300,
           :loadui              => 'enable',
           :context_menu        => {:menu_bindings => nil, :menu_id => nil},
@@ -723,7 +727,17 @@ module JqgridJson
       json << %Q(,"rows":[)
       each do |elem|
         elem.id ||= index(elem)
-        json << %Q({"id":"#{elem.id}","cell":[)
+        # Need to check if this is a composite key, if so we need to
+        # remove any meta characters as the generated ID's in the HTML
+        # can not contain meta chars, see
+        # http://stackoverflow.com/questions/3208876/using-jquery-selector-with-ids-with-comma
+        if elem.id.is_a?(Array)
+          ids = elem.id.join(',')
+        else
+          ids = elem.id
+        end
+        ids = ids.gsub(/([:~!<>=.#;&+*~':"!^$"])/,'---').gsub(/,/,'___')
+        json << %Q({"id":"#{ids}","cell":[)
         couples = elem.attributes.symbolize_keys
         attributes.each do |atr|
           value = get_atr_value(elem, atr, couples)
