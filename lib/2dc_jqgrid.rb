@@ -481,6 +481,8 @@ module Jqgrid
             :viewrecords   => 'true',
             :rowlist       => '[10,25,50,100]',
             :shrinkToFit   => 'false',
+            :form_width    => 300,
+            :autowidth     => 'false',
             :context_menu  => {:menu_bindings => nil, :menu_id => nil},
           }.merge(options[:subgrid])
 
@@ -549,13 +551,23 @@ module Jqgrid
                 viewrecords: #{options[:subgrid][:viewrecords]},
                 rowlist: #{options[:subgrid][:rowlist]},
                 shrinkToFit: #{options[:subgrid][:shrinkToFit]},
-                //toolbar : [true,"top"], 
+                autowidth: #{options[:subgrid][:autowidth]},
+                //toolbar : [true,"top"],
         		    #{subgrid_inline_edit}
         		    #{subgrid_direct_link}
                 #{subgrid_context_menu}
         		    height: '100%'
         		})
-        		.navGrid("#"+pager_id,{edit:#{options[:subgrid][:edit]},add:#{options[:subgrid][:add]},del:#{options[:subgrid][:delete]},search:false})
+        		.navGrid("#"+pager_id,
+              {edit:#{options[:subgrid][:edit]},add:#{options[:subgrid][:add]},del:#{options[:subgrid][:delete]},search:false},
+              // Edit options
+              // *** Set edit & add forms modal to false, if true then it causes all sorts of problems with datepicker and other issues ***
+              {closeOnEscape:true,modal:false,recreateForm:#{options[:recreateForm]},width:#{options[:subgrid][:form_width]},closeAfterEdit:true,afterSubmit:function(r,data){return #{options[:error_handler_return_value]}(r,data,'edit');}},
+              // Add options
+              {closeOnEscape:true,modal:false,recreateForm:#{options[:recreateForm]},width:#{options[:subgrid][:form_width]},closeAfterAdd:true,afterSubmit:function(r,data){return #{options[:error_handler_return_value]}(r,data,'add');}},
+              // Delete options
+              {closeOnEscape:true,modal:true,afterSubmit:function(r,data){return #{options[:error_handler_return_value]}(r,data,'delete');}}
+            )
             .navButtonAdd("#"+pager_id,{caption:"",title:$.jgrid.nav.searchtitle, buttonicon :'ui-icon-search', onClickButton:function(){ subgrd[0].toggleToolbar() } })
             subgrd.filterToolbar();
             subgrd[0].toggleToolbar();
@@ -826,3 +838,4 @@ module JqgridFilter
     conditions.chomp("AND ")
   end
 end
+
