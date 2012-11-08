@@ -483,6 +483,8 @@ module Jqgrid
             :shrinkToFit   => 'false',
             :form_width    => 300,
             :autowidth     => 'false',
+            :footerrow           => 'false',
+            :userDataOnFooter    => 'false',
             :context_menu  => {:menu_bindings => nil, :menu_id => nil},
           }.merge(options[:subgrid])
 
@@ -539,7 +541,7 @@ module Jqgrid
         		$("#"+subgrid_id).html("<table id='"+subgrid_table_id+"' class='scroll'></table><div id='"+pager_id+"' class='scroll'></div>");
         		var subgrd = jQuery("#"+subgrid_table_id).jqGrid({
         			url:"#{options[:subgrid][:url]}?q=2&id="+row_id,
-              editurl:'#{options[:subgrid][:edit_url]}?parent_id='+row_id,                            
+                                editurl:'#{options[:subgrid][:edit_url]}?parent_id='+row_id,                            
         			datatype: "json",
         			colNames: #{sub_col_names},
         			colModel: #{sub_col_model},
@@ -547,11 +549,14 @@ module Jqgrid
         		   	pager: pager_id,
         		   	imgpath: '/images/jqgrid',
         		   	sortname: '#{options[:subgrid][:sort_column]}',
-        		    sortorder: '#{options[:subgrid][:sort_order]}',
+        		        sortorder: '#{options[:subgrid][:sort_order]}',
                 viewrecords: #{options[:subgrid][:viewrecords]},
                 rowlist: #{options[:subgrid][:rowlist]},
                 shrinkToFit: #{options[:subgrid][:shrinkToFit]},
                 autowidth: #{options[:subgrid][:autowidth]},
+                footerrow: #{options[:subgrid][:footerrow]},
+                userDataOnFooter: #{options[:subgrid][:userDataOnFooter]},
+
                 //toolbar : [true,"top"],
         		    #{subgrid_inline_edit}
         		    #{subgrid_direct_link}
@@ -614,7 +619,8 @@ module Jqgrid
               cellEdit: #{options[:cellEdit]},
               userDataOnFooter: #{options[:userDataOnFooter]},
 	      subGridOptions: {
-		"openicon"  : "ui-icon-arrowreturn-1-e"
+		openicon : "ui-icon-arrowreturn-1-e",
+                selectOnExpand : true, 
 	      },
               loadError: function(xhr, status, error){
                 // Redirect to login page when session expires, see application controller
