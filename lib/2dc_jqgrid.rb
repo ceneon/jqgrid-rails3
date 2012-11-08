@@ -613,6 +613,9 @@ module Jqgrid
               cellsubmit: '#{options[:cellsubmit]}',
               cellEdit: #{options[:cellEdit]},
               userDataOnFooter: #{options[:userDataOnFooter]},
+	      subGridOptions: {
+		"openicon"  : "ui-icon-arrowreturn-1-e"
+	      },
               loadError: function(xhr, status, error){
                 // Redirect to login page when session expires, see application controller
                 if (error == 'Unauthorized') {
