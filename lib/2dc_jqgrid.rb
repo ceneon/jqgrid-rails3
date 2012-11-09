@@ -1,8 +1,8 @@
 module Jqgrid
 
-  def jqgrid_stylesheets(theme="default")
-      stylesheet_link_tag "jqgrid/themes/#{theme}/jquery-ui-1.8.custom.css", 
-        'jqgrid/ui.jqgrid.css', 
+    def jqgrid_stylesheets(theme="default")
+      stylesheet_link_tag "jqgrid/themes/#{theme}/jquery-ui-1.8.custom.css",
+        'jqgrid/ui.jqgrid.css',
         :cache => "jqgrid-#{theme}-css"
     end
 
@@ -56,7 +56,8 @@ module Jqgrid
           :loadonce            => 'false',
           :cellsubmit          => 'remote',
           :cellEdit            => 'false',
-	  # If not a *local* search then it depends on DB, postgres for example is case insensitive when using LIKE
+          :searchhidden        => 'false'
+	        # If not a *local* search then it depends on DB, postgres for example is case insensitive when using LIKE
           # so it will ignore this, in docs is says:
           # By default the *local* searching is case-sensitive. To make the local search and 
           # sorting not case-insensitive set this options to true
@@ -545,23 +546,23 @@ module Jqgrid
         			datatype: "json",
         			colNames: #{sub_col_names},
         			colModel: #{sub_col_model},
-        		   	rowNum:#{options[:subgrid][:rows_per_page]},
-        		   	pager: pager_id,
-        		   	imgpath: '/images/jqgrid',
-        		   	sortname: '#{options[:subgrid][:sort_column]}',
-        		        sortorder: '#{options[:subgrid][:sort_order]}',
-                viewrecords: #{options[:subgrid][:viewrecords]},
-                rowlist: #{options[:subgrid][:rowlist]},
-                shrinkToFit: #{options[:subgrid][:shrinkToFit]},
-                autowidth: #{options[:subgrid][:autowidth]},
-                footerrow: #{options[:subgrid][:footerrow]},
-                userDataOnFooter: #{options[:subgrid][:userDataOnFooter]},
+              rowNum:#{options[:subgrid][:rows_per_page]},
+              pager: pager_id,
+              imgpath: '/images/jqgrid',
+              sortname: '#{options[:subgrid][:sort_column]}',
+                  sortorder: '#{options[:subgrid][:sort_order]}',
+              viewrecords: #{options[:subgrid][:viewrecords]},
+              rowlist: #{options[:subgrid][:rowlist]},
+              shrinkToFit: #{options[:subgrid][:shrinkToFit]},
+              autowidth: #{options[:subgrid][:autowidth]},
+              footerrow: #{options[:subgrid][:footerrow]},
+              userDataOnFooter: #{options[:subgrid][:userDataOnFooter]},
 
-                //toolbar : [true,"top"],
-        		    #{subgrid_inline_edit}
-        		    #{subgrid_direct_link}
-                #{subgrid_context_menu}
-        		    height: '100%'
+              //toolbar : [true,"top"],
+              #{subgrid_inline_edit}
+              #{subgrid_direct_link}
+              #{subgrid_context_menu}
+              height: '100%'
         		})
         		.navGrid("#"+pager_id,
               {edit:#{options[:subgrid][:edit]},add:#{options[:subgrid][:add]},del:#{options[:subgrid][:delete]},search:false},
@@ -614,21 +615,22 @@ module Jqgrid
               shrinkToFit: #{options[:shrinkToFit]}, 
               footerrow: #{options[:footerrow]},
               loadonce: #{options[:loadonce]},
-	      ignoreCase: #{options[:ignoreCase]},
+	            ignoreCase: #{options[:ignoreCase]},
               cellsubmit: '#{options[:cellsubmit]}',
               cellEdit: #{options[:cellEdit]},
+              searchhidden: #{options[:searchhidden]},
               userDataOnFooter: #{options[:userDataOnFooter]},
-	      subGridOptions: {
-		openicon : "ui-icon-arrowreturn-1-e",
+	            subGridOptions: {
+		            openicon : "ui-icon-arrowreturn-1-e",
                 selectOnExpand : true, 
-	      },
+	            },
               loadError: function(xhr, status, error){
                 // Redirect to login page when session expires, see application controller
                 if (error == 'Unauthorized') {
                   window.location = '/login';
                 } else {
-	          alert('An error has occurred during the grid load operation');
-		}
+	                alert('An error has occurred during the grid load operation');
+		            }
               },
               #{grouping}
               #{grouping_view}
