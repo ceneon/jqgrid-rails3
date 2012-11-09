@@ -56,7 +56,6 @@ module Jqgrid
           :loadonce            => 'false',
           :cellsubmit          => 'remote',
           :cellEdit            => 'false',
-          :searchhidden        => 'false',
 	        # If not a *local* search then it depends on DB, postgres for example is case insensitive when using LIKE
           # so it will ignore this, in docs is says:
           # By default the *local* searching is case-sensitive. To make the local search and 
@@ -618,7 +617,6 @@ module Jqgrid
 	            ignoreCase: #{options[:ignoreCase]},
               cellsubmit: '#{options[:cellsubmit]}',
               cellEdit: #{options[:cellEdit]},
-              searchhidden: #{options[:searchhidden]},
               userDataOnFooter: #{options[:userDataOnFooter]},
 	            subGridOptions: {
 		            openicon : "ui-icon-arrowreturn-1-e",
