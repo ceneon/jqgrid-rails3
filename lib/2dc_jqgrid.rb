@@ -413,6 +413,17 @@ module Jqgrid
         });/
       end
 
+	  direct_link = ""
+	  # Enable row double-clicking handler
+      if  options[:dblclick_handler].present?
+        direct_link = %Q/
+        ondblClickRow: function(id){ 
+          if(id){ 
+            #{options[:dblclick_handler]}(id); 
+          } 
+        },/
+      end  
+
       # Enable inline editing
       # When a row is selected, all fields are transformed to input types
       editable = ""
