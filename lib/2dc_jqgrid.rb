@@ -647,6 +647,7 @@ module Jqgrid
               #{multiselect_handlers}
               #{onselectrow}
               #{grid_loaded}
+	      #{direct_link}
               #{before_request}
               #{grid_complete}
               #{context_menu}
