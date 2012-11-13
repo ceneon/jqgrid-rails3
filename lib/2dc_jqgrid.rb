@@ -413,10 +413,10 @@ module Jqgrid
         });/
       end
 
-	  direct_link = ""
-	  # Enable row double-clicking handler
+      dblclick = ""
+      # Enable row double-clicking handler
       if  options[:dblclick_handler].present?
-        direct_link = %Q/
+        dblclick = %Q/
         ondblClickRow: function(id){ 
           if(id){ 
             #{options[:dblclick_handler]}(id); 
@@ -647,7 +647,7 @@ module Jqgrid
               #{multiselect_handlers}
               #{onselectrow}
               #{grid_loaded}
-	      #{direct_link}
+	      #{dblclick}
               #{before_request}
               #{grid_complete}
               #{context_menu}
